@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SmokeOff!</string>
+    <string name="pack_cost">How much does a pack cost?</string>
+    <string name="how_many_in_a_pack">How many cigarretes are in a pack?</string>
+    <string name="how_many_a_day">How many cigarettes do you smoke a day?</string>
+    <string name="Next">Next</string>
+    <string name="describe_title">Describe your smoking...</string>
+
+
+    <string name="date_pick">Pick a date</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
