@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.app.Activity
 import android.app.DatePickerDialog.OnDateSetListener
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -26,7 +27,11 @@ class MainActivity : AppCompatActivity() {
     private var TestText: TextView? = null
     private var Timer: TextView? = null
     private var mDateSetListener: OnDateSetListener? = null
-    var SecPasser: Int = 0
+    var DatePasser: Date = Date()
+    var mHandler = Handler()
+    var mInterval: Long = 1000
+    var dateInputChooser: Int = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         Timer = findViewById(R.id.textViewTimer) as TextView
         TestText = findViewById(R.id.textViewTest) as TextView
         mDisplayDate = findViewById(R.id.tvDate) as TextView
+
+
+
 
 
         mDisplayDate!!.setOnClickListener {
@@ -68,24 +76,33 @@ class MainActivity : AppCompatActivity() {
             val date = month.toString() + "/" + day + "/" + year
             mDisplayDate!!.text = date
             TestText!!.text = seconds.toString()
-            //SecPasser = seconds
+            DatePasser = StartDate
+            dateInputChooser = 1
             TickTimer(StartDate)
 
         }
 
 
+        mHandler.postDelayed(object:Runnable {
+            override fun run(){
 
+                if (dateInputChooser == 1)
+                TickTimer(DatePasser)
+
+                mHandler.postDelayed(this, mInterval)
+            }
+        }, mInterval )
 
     }
 
     fun TickTimer(StartTime: Date) {
 
-        var NowDate = Date()
+        val NowDate = Date()
         var Difference = NowDate.time - StartTime.time
         val secondsInMilli: Long = 1000
         val minutesInMilli: Long = secondsInMilli*60
         val hoursInMilli: Long = minutesInMilli*60
-        var daysInMilli: Long = hoursInMilli*24
+        val daysInMilli: Long = hoursInMilli*24
 
         val elapsedDays: Long = Difference/daysInMilli
         Difference = Difference % daysInMilli
@@ -99,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         val elapsedSeconds: Long = Difference/secondsInMilli
 
         Timer!!.text = getString(R.string.timer, elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds)
+
 
 
     }
