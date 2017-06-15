@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.app.Activity
+import android.app.DatePickerDialog.OnDateSetListener
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -16,27 +17,33 @@ import android.widget.EditText
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
-
-import java.util.Calendar
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     private var mDisplayDate: TextView? = null
-    private var mDateSetListener: DatePickerDialog.OnDateSetListener? = null
+    private var TestText: TextView? = null
+    private var Timer: TextView? = null
+    private var mDateSetListener: OnDateSetListener? = null
+    var SecPasser: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Timer = findViewById(R.id.textViewTimer) as TextView
+        TestText = findViewById(R.id.textViewTest) as TextView
         mDisplayDate = findViewById(R.id.tvDate) as TextView
+
 
         mDisplayDate!!.setOnClickListener {
             val cal = Calendar.getInstance()
             val year = cal.get(Calendar.YEAR)
             val month = cal.get(Calendar.MONTH)
             val day = cal.get(Calendar.DAY_OF_MONTH)
+
 
             val dialog = DatePickerDialog(
                     this@MainActivity,
@@ -47,28 +54,73 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        mDateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+        mDateSetListener = OnDateSetListener { datePicker, year, month, day ->
             var month = month
             month = month + 1
+            val cal = Calendar.getInstance()
+            val minutes = cal.get(Calendar.MINUTE)
+            val hours = cal.get(Calendar.HOUR_OF_DAY)
+            var seconds = cal.get(Calendar.SECOND)
+            val StartDate = Date()
+            seconds = seconds + hours*60*60 + minutes*60
 
-            Log.d(TAG, "onDateSet: mm/dd/yyyy: $month/$day$year")
+
             val date = month.toString() + "/" + day + "/" + year
             mDisplayDate!!.text = date
+            TestText!!.text = seconds.toString()
+            //SecPasser = seconds
+            TickTimer(StartDate)
+
         }
+
+
 
 
     }
 
-    companion object {
-        /*public static final String EXTRA_MESSAGE1 = "com.example.felipe.smokeoff.MESSAGE1";
+    fun TickTimer(StartTime: Date) {
+
+        var NowDate = Date()
+        var Difference = NowDate.time - StartTime.time
+        val secondsInMilli: Long = 1000
+        val minutesInMilli: Long = secondsInMilli*60
+        val hoursInMilli: Long = minutesInMilli*60
+        var daysInMilli: Long = hoursInMilli*24
+
+        val elapsedDays: Long = Difference/daysInMilli
+        Difference = Difference % daysInMilli
+
+        val elapsedHours: Long = Difference/hoursInMilli
+        Difference = Difference % hoursInMilli
+
+        val elapsedMinutes: Long = Difference/minutesInMilli
+        Difference = Difference % minutesInMilli
+
+        val elapsedSeconds: Long = Difference/secondsInMilli
+
+        Timer!!.text = getString(R.string.timer, elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds)
+
+
+    }
+
+
+
+
+
+
+
+    }
+
+    /*companion object {
+        public static final String EXTRA_MESSAGE1 = "com.example.felipe.smokeoff.MESSAGE1";
     public static final String EXTRA_MESSAGE2 = "com.example.felipe.smokeoff.MESSAGE2";
-    public static final String EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3";*/
+    public static final String EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3";
 
         private val TAG = "MainActivity"
     }
 
 
-    /* public void onClickNext(View v) {
+    public void onClickNext(View v) {
 
         Intent NextPage = new Intent(this, PageTwoActivity.class);
         EditText CigsPerDay = (EditText) findViewById(R.id.how_many_cigs_per_day);
@@ -88,5 +140,5 @@ class MainActivity : AppCompatActivity() {
     }*/
 
 
-}
+
 
