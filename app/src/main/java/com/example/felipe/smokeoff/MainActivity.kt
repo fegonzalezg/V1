@@ -21,7 +21,17 @@ import android.widget.TextView
 import java.util.*
 
 
+
+
 class MainActivity : AppCompatActivity() {
+
+
+    companion object {
+        const val EXTRA_MESSAGE1 = "com.example.felipe.smokeoff.MESSAGE1";
+        const  val EXTRA_MESSAGE2 = "com.example.felipe.smokeoff.MESSAGE2";
+        const  val EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3";
+    }
+
 
     private var mDisplayDate: TextView? = null
     private var TestText: TextView? = null
@@ -122,7 +132,27 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun onClickNext(v:View) {
+        val returnIntent = Intent(this, PageTwoActivity::class.java)
+        val CigsPerDay = findViewById(R.id.how_many_cigs_per_day) as EditText
+        //val CigsPerPack = findViewById(R.id.how_many_per_pack) as EditText
+        //val PackCost = findViewById(R.id.cost_per_pack) as EditText
+        val CigsPerDayString = CigsPerDay.getText().toString()
+        //val CigsPerPackString = CigsPerPack.getText().toString()
+        //val PackCostString = PackCost.getText().toString()
 
+        //NextPage.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
+        //NextPage.putExtra(EXTRA_MESSAGE2, CigsPerPackString)
+        //NextPage.putExtra(EXTRA_MESSAGE3, PackCostString)
+        //startActivity(NextPage)
+
+        val result = 1
+        returnIntent.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
+
+
+    }
 
 
 
@@ -135,27 +165,25 @@ class MainActivity : AppCompatActivity() {
     public static final String EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3";
 
         private val TAG = "MainActivity"
-    }
-
-
-    public void onClickNext(View v) {
-
-        Intent NextPage = new Intent(this, PageTwoActivity.class);
-        EditText CigsPerDay = (EditText) findViewById(R.id.how_many_cigs_per_day);
-        EditText CigsPerPack = (EditText) findViewById(R.id.how_many_per_pack);
-        EditText PackCost = (EditText) findViewById(R.id.cost_per_pack);
-
-        String CigsPerDayString = CigsPerDay.getText().toString();
-        String CigsPerPackString = CigsPerPack.getText().toString();
-        String PackCostString = PackCost.getText().toString();
-
-        NextPage.putExtra(EXTRA_MESSAGE1, CigsPerDayString);
-        NextPage.putExtra(EXTRA_MESSAGE2, CigsPerPackString);
-        NextPage.putExtra(EXTRA_MESSAGE3, PackCostString);
-
-        startActivity(NextPage);
-
     }*/
+
+
+/*fun onClickNext(v:View) {
+    val NextPage = Intent(this, PageTwoActivity::class.java)
+    val CigsPerDay = findViewById(R.id.how_many_cigs_per_day) as EditText
+    val CigsPerPack = findViewById(R.id.how_many_per_pack) as EditText
+    val PackCost = findViewById(R.id.cost_per_pack) as EditText
+    val CigsPerDayString = CigsPerDay.getText().toString()
+    val CigsPerPackString = CigsPerPack.getText().toString()
+    val PackCostString = PackCost.getText().toString()
+    NextPage.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
+    NextPage.putExtra(EXTRA_MESSAGE2, CigsPerPackString)
+    NextPage.putExtra(EXTRA_MESSAGE3, PackCostString)
+    startActivity(NextPage)
+}*/
+
+
+
 
 
 
