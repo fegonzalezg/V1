@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.ActionBarActivity
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Button
 import android.widget.TextView
 import java.util.*
 
@@ -19,7 +20,7 @@ class PageTwoActivity : ActionBarActivity() {
     var dateInputChooser: Int = 0
     var mHandler = Handler()
     var mInterval: Long = 1000
-
+    var testButton: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,7 @@ class PageTwoActivity : ActionBarActivity() {
         setContentView(R.layout.activity_page_two)
 
         //dataQuery = findViewById(R.id.textView) as TextView
+        testButton = findViewById(R.id.button2) as Button
         var isnew = 0
 
         if (isnew==1) {
@@ -36,7 +38,11 @@ class PageTwoActivity : ActionBarActivity() {
         }
         else{}
 
+        testButton!!.setOnClickListener {
+            val userInputActivity = Intent(this, MainActivity::class.java)
+            startActivityForResult(userInputActivity, 1)
 
+        }
 
         /*mHandler.postDelayed(object:Runnable {
             override fun run(){
