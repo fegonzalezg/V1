@@ -25,12 +25,13 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object Intent1Data {
-         const val EXTRA_MESSAGE1 = "com.example.felipe.smokeoff.MESSAGE1"
-         const val EXTRA_MESSAGE2 = "com.example.felipe.smokeoff.MESSAGE2"
-         const val EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3"
 
+    companion object {
+        const val EXTRA_MESSAGE1 = "com.example.felipe.smokeoff.MESSAGE1";
+        const  val EXTRA_MESSAGE2 = "com.example.felipe.smokeoff.MESSAGE2";
+        const  val EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3";
     }
+
 
     private var mDisplayDate: TextView? = null
     private var TestText: TextView? = null
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     var mHandler = Handler()
     var mInterval: Long = 1000
     var dateInputChooser: Int = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             val hours = cal.get(Calendar.HOUR_OF_DAY)
             var seconds = cal.get(Calendar.SECOND)
             val StartDate = Date()
-            seconds = seconds + hours * 60 * 60 + minutes * 60
+            seconds = seconds + hours*60*60 + minutes*60
 
 
             val date = month.toString() + "/" + day + "/" + year
@@ -91,56 +93,63 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        mHandler.postDelayed(object : Runnable {
-            override fun run() {
+        mHandler.postDelayed(object:Runnable {
+            override fun run(){
 
                 if (dateInputChooser == 1)
-                    TickTimer(DatePasser)
+                TickTimer(DatePasser)
 
                 mHandler.postDelayed(this, mInterval)
             }
-        }, mInterval)
+        }, mInterval )
 
     }
-
-    fun onClickNext(v: View?) {
-        val NextPage = Intent(this, PageTwoActivity::class.java)
-        val CigsPerDay = findViewById(R.id.how_many_cigs_per_day) as EditText
-        val CigsPerPack = findViewById(R.id.how_many_per_pack) as EditText
-        val PackCost = findViewById(R.id.cost_per_pack) as EditText
-        val CigsPerDayString = CigsPerDay.getText().toString()
-        val CigsPerPackString = CigsPerPack.getText().toString()
-        val PackCostString = PackCost.getText().toString()
-        NextPage.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
-        NextPage.putExtra(EXTRA_MESSAGE2, CigsPerPackString)
-        NextPage.putExtra(EXTRA_MESSAGE3, PackCostString)
-
-        startActivity(NextPage)
-    }
-
-
 
     fun TickTimer(StartTime: Date) {
 
         val NowDate = Date()
         var Difference = NowDate.time - StartTime.time
         val secondsInMilli: Long = 1000
-        val minutesInMilli: Long = secondsInMilli * 60
-        val hoursInMilli: Long = minutesInMilli * 60
-        val daysInMilli: Long = hoursInMilli * 24
+        val minutesInMilli: Long = secondsInMilli*60
+        val hoursInMilli: Long = minutesInMilli*60
+        val daysInMilli: Long = hoursInMilli*24
 
-        val elapsedDays: Long = Difference / daysInMilli
+        val elapsedDays: Long = Difference/daysInMilli
         Difference = Difference % daysInMilli
 
-        val elapsedHours: Long = Difference / hoursInMilli
+        val elapsedHours: Long = Difference/hoursInMilli
         Difference = Difference % hoursInMilli
 
-        val elapsedMinutes: Long = Difference / minutesInMilli
+        val elapsedMinutes: Long = Difference/minutesInMilli
         Difference = Difference % minutesInMilli
 
-        val elapsedSeconds: Long = Difference / secondsInMilli
+        val elapsedSeconds: Long = Difference/secondsInMilli
 
         Timer!!.text = getString(R.string.timer, elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds)
+
+
+
+    }
+
+
+    fun onClickNext(v:View) {
+        val returnIntent = Intent(this, PageTwoActivity::class.java)
+        val CigsPerDay = findViewById(R.id.how_many_cigs_per_day) as EditText
+        //val CigsPerPack = findViewById(R.id.how_many_per_pack) as EditText
+        //val PackCost = findViewById(R.id.cost_per_pack) as EditText
+        val CigsPerDayString = CigsPerDay.getText().toString()
+        //val CigsPerPackString = CigsPerPack.getText().toString()
+        //val PackCostString = PackCost.getText().toString()
+
+        //NextPage.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
+        //NextPage.putExtra(EXTRA_MESSAGE2, CigsPerPackString)
+        //NextPage.putExtra(EXTRA_MESSAGE3, PackCostString)
+        //startActivity(NextPage)
+
+        val result = 1
+        returnIntent.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
 
 
     }
@@ -148,8 +157,31 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
 
-}
+    /*companion object {
+        public static final String EXTRA_MESSAGE1 = "com.example.felipe.smokeoff.MESSAGE1";
+    public static final String EXTRA_MESSAGE2 = "com.example.felipe.smokeoff.MESSAGE2";
+    public static final String EXTRA_MESSAGE3 = "com.example.felipe.smokeoff.MESSAGE3";
+
+        private val TAG = "MainActivity"
+    }*/
+
+
+/*fun onClickNext(v:View) {
+    val NextPage = Intent(this, PageTwoActivity::class.java)
+    val CigsPerDay = findViewById(R.id.how_many_cigs_per_day) as EditText
+    val CigsPerPack = findViewById(R.id.how_many_per_pack) as EditText
+    val PackCost = findViewById(R.id.cost_per_pack) as EditText
+    val CigsPerDayString = CigsPerDay.getText().toString()
+    val CigsPerPackString = CigsPerPack.getText().toString()
+    val PackCostString = PackCost.getText().toString()
+    NextPage.putExtra(EXTRA_MESSAGE1, CigsPerDayString)
+    NextPage.putExtra(EXTRA_MESSAGE2, CigsPerPackString)
+    NextPage.putExtra(EXTRA_MESSAGE3, PackCostString)
+    startActivity(NextPage)
+}*/
+
 
 
 

@@ -106,6 +106,7 @@
         android:layout_marginRight="32dp"
         android:onClick="onClickNext"
         android:text="@string/Next"
+        android:onClick="onClickNext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
